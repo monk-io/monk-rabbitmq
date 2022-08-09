@@ -1,0 +1,49 @@
+namespace: rabbitmq
+
+
+rabbitmq:
+  defines: runnable
+  containers:
+    defines: containers
+    rabbitmq:
+      image:   docker.io/rabbitmq
+      image-tag: <- `${rabbitmq-image-tag}`
+      ports:
+        - 4369:4369
+        - 5551:5551
+        - 5552:5552
+        - 5672:5672
+        - 25672:25672
+        - 8080:15672
+      paths:
+        - <- `${monk-volume-path}/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia/`
+  files:
+    config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/rabbitmq.conf
+      contents: <<< files/rabbitmq.conf
+
+    advance-config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/advanced.conf
+      contents: <<< files/advanced.conf            
+
+  variables:
+    RABBITMQ_MNESIA_BASE:
+      env: RABBITMQ_CONFIG_FILE
+      type: string
+      value: "/var/lib/rabbitmq/mnesia/"
+    RABBITMQ_CONFIG_FILE:
+      env: RABBITMQ_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/rabbitmq.conf"
+    RABBITMQ_ADVANCED_CONFIG_FILE:
+      env: RABBITMQ_ADVANCED_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/advanced.config"    
+    RABBITMQ_SECURE_PASSWORD:
+      env: RABBITMQ_SECURE_PASSWORD
+      type: string
+      value: <- `https://${mattermost-server-name}`
