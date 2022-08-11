@@ -1,2 +1,2 @@
 REPO monk-rabbitmq
-LOAD rabbitmq.yml stack.yml
+LOAD rabbitmq.yaml stack.yaml

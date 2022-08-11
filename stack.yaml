@@ -1,13 +1,8 @@
-namespace: mattermost-preview
+namespace: rabbitmq
 
 stack:
   defines: process-group
   runnable-list:
     - rabbitmq/rabbitmq
   variables:
-    rabbitmq-secure-password:
-      type: string
-      value: "yes"
     rabbitmq-image-tag: "3.10-management"
-
-
