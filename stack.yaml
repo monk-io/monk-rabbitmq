@@ -5,4 +5,4 @@ stack:
   runnable-list:
     - rabbitmq/rabbitmq
   variables:
-    rabbitmq-image-tag: "3.10-management"
+    rabbitmq-image-tag: "3-management"

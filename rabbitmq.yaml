@@ -17,23 +17,17 @@ rabbitmq:
         - 8081:15672
       # paths:
       #   - <- `${monk-volume-path}/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia/`
-  # files:
+  files:
     # config:
     #   container: rabbitmq
     #   mode: 0644
     #   path: /etc/rabbitmq/rabbitmq.conf
     #   contents: <<< files/rabbitmq.conf
-    # advancedconfig:
-    #   container: rabbitmq
-    #   mode: 0644
-    #   path: /etc/rabbitmq/advanced.config
-    #   contents: <<< files/advanced.config
-  files:
-    config:
+    advancedconfig:
       container: rabbitmq
       mode: 0644
-      path: /etc/prometheus/prometheus.yml
-      contents: << prometheus.yaml
+      path: /etc/rabbitmqconf/advanced.config
+      contents: <<< files/advanced.config
   variables:
   #   RABBITMQ_MNESIA_BASE:
   #     env: RABBITMQ_CONFIG_FILE
@@ -43,11 +37,11 @@ rabbitmq:
     #   env: RABBITMQ_PLUGINS_DIR
     #   type: string
     #   value: "/var/lib/rabbitmq/plugins"
-    RABBITMQ_CONFIG_FILE:
-      env: RABBITMQ_CONFIG_FILE
-      type: string
-      value: "/etc/rabbitmq/rabbitmq.conf"
-    RABBITMQ_ADVANCED_CONFIG_FILE:
-      env: RABBITMQ_ADVANCED_CONFIG_FILE
-      type: string
-      value: "/etc/rabbitmq/advanced.config"
+    # RABBITMQ_CONFIG_FILE:
+    #   env: RABBITMQ_CONFIG_FILE
+    #   type: string
+    #   value: "/etc/rabbitmq/rabbitmq.conf"
+    # RABBITMQ_ADVANCED_CONFIG_FILE:
+    #   env: RABBITMQ_ADVANCED_CONFIG_FILE
+    #   type: string
+    #   value: "/etc/rabbitmq/advanced.config"
