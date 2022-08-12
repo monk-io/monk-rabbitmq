@@ -6,8 +6,8 @@ rabbitmq:
   containers:
     defines: containers
     rabbitmq:
-      image:   docker.io/rabbitmq
-      image-tag: <- `${rabbitmq-image-tag}`
+      image: rabbitmq
+      image-tag: <- `${rabbitmq-image}`
       ports:
         - 4369:4369
         - 5551:5551
@@ -15,33 +15,32 @@ rabbitmq:
         - 5672:5672
         - 25672:25672
         - 8081:15672
-      # paths:
-      #   - <- `${monk-volume-path}/rabbitmq/mnesia:/var/lib/rabbitmq/mnesia/`
+      paths:
+        - <- `${monk-volume-path}/rabbitmq:/var/lib/rabbitmq/`
   files:
-    # config:
-    #   container: rabbitmq
-    #   mode: 0644
-    #   path: /etc/rabbitmq/rabbitmq.conf
-    #   contents: <<< files/rabbitmq.conf
-    advancedconfig:
+    advanced-config:
       container: rabbitmq
       mode: 0644
-      path: /etc/rabbitmqconf/advanced.config
+      path: /etc/rabbitmq/advanced.config
       contents: <<< files/advanced.config
+    config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/rabbitmq.conf
+      contents: <<< files/rabbitmq.conf
   variables:
-  #   RABBITMQ_MNESIA_BASE:
-  #     env: RABBITMQ_CONFIG_FILE
-  #     type: string
-  #     value: "/var/lib/rabbitmq/mnesia/"
-    # RABBITMQ_PLUGINS_DIR:
-    #   env: RABBITMQ_PLUGINS_DIR
-    #   type: string
-    #   value: "/var/lib/rabbitmq/plugins"
-    # RABBITMQ_CONFIG_FILE:
-    #   env: RABBITMQ_CONFIG_FILE
-    #   type: string
-    #   value: "/etc/rabbitmq/rabbitmq.conf"
-    # RABBITMQ_ADVANCED_CONFIG_FILE:
-    #   env: RABBITMQ_ADVANCED_CONFIG_FILE
-    #   type: string
-    #   value: "/etc/rabbitmq/advanced.config"
+    rabbitmq-image:
+      value: <- $rabbitmq-image-tag
+      type: string     
+    RABBITMQ_MNESIA_BASE:
+      env: RABBITMQ_MNESIA_BASE
+      type: string
+      value: "/var/lib/rabbitmq/mnesia/"
+    RABBITMQ_CONFIG_FILE:
+      env: RABBITMQ_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/rabbitmq.conf"
+    RABBITMQ_ADVANCED_CONFIG_FILE:
+      env: RABBITMQ_ADVANCED_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/advanced.config"
