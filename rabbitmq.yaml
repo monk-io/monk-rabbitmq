@@ -3,6 +3,14 @@ namespace: rabbitmq
 
 rabbitmq:
   defines: runnable
+  metadata:
+    defines: metadata
+    name: rabbitmq
+    description: RabbitMQ is one of the most popular open source message brokers. From T-Mobile to Runtastic, RabbitMQ is used worldwide at small startups and large enterprises.
+    tags: self hosted, message brokers, message queues
+    website: https://www.rabbitmq.com/
+    source: https://github.com/rabbitmq/rabbitmq-server
+    publisher: "monk.io"
   containers:
     defines: containers
     rabbitmq:
