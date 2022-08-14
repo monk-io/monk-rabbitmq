@@ -7,7 +7,7 @@ stack:
     - rabbitmq/nginx
   variables:
     rabbitmq-image-tag: "3.10-management"
-    nginx-listen-port: 8081
+    nginx-listen-port: 8088
     nginx-image-tag: "latest"
     rabbitmq-server-name: "rabbitmq.example.com"
-    rabbitmq-node-port: 5672
+    rabbitmq-node-port: 15672

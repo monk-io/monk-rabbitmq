@@ -14,7 +14,6 @@ rabbitmq:
         - 5552:5552
         - 5672:5672
         - 25672:25672
-        - 8081:15672
       paths:
         - <- `${monk-volume-path}/rabbitmq:/var/lib/rabbitmq/`
   files:
