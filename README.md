@@ -75,10 +75,12 @@ First clone the repository and change the current directory to the /sonarqube-po
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 rabbitmq/rabbitmq
- │  └─🧩 rabbitmq/nginx
- └─🔗 Process groups:
-    └─🧩 rabbitmq/stack
+ │  ├─🧩 rabbitmq/nginx
+ │  └─🧩 rabbitmq/rabbitmq
+ ├─🔗 Process groups:
+ │  └─🧩 rabbitmq/stack
+ └─⚙️ Entity instances:
+    └─🧩 rabbitmq/rabbitmq/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list rabbitmq
@@ -147,10 +149,12 @@ Once cluster is ready execute the same command as for local and select your clus
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 rabbitmq/rabbitmq
- │  └─🧩 rabbitmq/nginx
- └─🔗 Process groups:
-    └─🧩 rabbitmq/stack
+ │  ├─🧩 rabbitmq/nginx
+ │  └─🧩 rabbitmq/rabbitmq
+ ├─🔗 Process groups:
+ │  └─🧩 rabbitmq/stack
+ └─⚙️ Entity instances:
+    └─🧩 rabbitmq/rabbitmq/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list rabbitmq
