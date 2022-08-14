@@ -1,0 +1,121 @@
+namespace: rabbitmq
+
+
+rabbitmq:
+  defines: runnable
+  metadata:
+    defines: metadata
+    name: rabbitmq
+    description: RabbitMQ is one of the most popular open source message brokers. From T-Mobile to Runtastic, RabbitMQ is used worldwide at small startups and large enterprises.
+    tags: self hosted, message brokers, message queues
+    website: https://www.rabbitmq.com/
+    source: https://github.com/rabbitmq/rabbitmq-server
+    publisher: "monk.io"
+  containers:
+    defines: containers
+    volumes:
+      rabbitmq-data:
+        size: <- $persistent-volume-disk-capacity
+        kind: <- $persistent-volume-disk-type
+        path: <- $volume-data
+    rabbitmq:
+      image: rabbitmq
+      image-tag: <- `${rabbitmq-image}`
+      ports:
+        - 4369:4369
+        - 5551:5551
+        - 5552:5552
+        - 5672:5672
+        - 25672:25672
+      paths:
+        - <- `${volume-data}:/var/lib/rabbitmq/`
+  files:
+    advanced-config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/advanced.config
+      contents: <<< files/advanced.config
+    config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/rabbitmq.conf
+      contents: <<< files/rabbitmq.conf
+    env-config:
+      container: rabbitmq
+      mode: 0644
+      path: /etc/rabbitmq/rabbitmq-env.conf
+      contents: <<< files/rabbitmq-env.conf
+  variables:
+    volume-data:
+      type: string
+      value: <- `${moncc-volume-path}/rabbitmq`
+    persistent-volume-disk-capacity:
+      type: string
+      value: <- $persistent-volume-disk-size
+    persistent-volume-disk-type:
+      type: string
+      value: <- $persistent-volume-disk-kind
+    rabbitmq-image:
+      value: <- $rabbitmq-image-tag
+      type: string     
+    RABBITMQ_CONFIG_FILE:
+      env: RABBITMQ_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/rabbitmq.conf"
+    RABBITMQ_ADVANCED_CONFIG_FILE:
+      env: RABBITMQ_ADVANCED_CONFIG_FILE
+      type: string
+      value: "/etc/rabbitmq/advanced.config"
+    RABBITMQ_CONF_ENV_FILE:
+      env: RABBITMQ_CONF_ENV_FILE
+      type: string
+      value: "/etc/rabbitmq/rabbitmq-env.conf"
+
+nginx:
+  defines: runnable
+  inherits: nginx
+  files:
+    server-def:
+      contents: |
+        server {
+          listen 0.0.0.0:{{ v "listen-port" }};
+          server_name {{ v "server-name" }};
+          location / {
+            proxy_set_header X-Real-IP  $remote_addr;
+            proxy_set_header X-Forwarded-For $remote_addr;
+            proxy_set_header X-Forwarded-Proto $scheme;
+            proxy_set_header Host $host;
+            proxy_pass http://{{ v "proxy-target-host" }}:{{ v "proxy-target-port" }};
+          }
+        }
+      mode: 511
+      path: /opt/bitnami/nginx/conf/server_blocks/reverse_proxy.conf
+      container: nginx-reverse-proxy
+  containers:
+    defines: containers
+    nginx-reverse-proxy:
+      image-tag: <- `${nginx-image}`
+      image: docker.io/bitnami/nginx
+      ports:
+      - <- `0.0.0.0:${listen-port}:${listen-port}/tcp`
+  depends:
+    wait-for:
+      runnables:
+        - rabbitmq/rabbitmq
+      timeout: 30
+  variables:
+    proxy-target-host:
+      value: <- get-hostname("rabbitmq/rabbitmq", "rabbitmq") split(".dns.podman") join("")
+      type: string
+    listen-port:
+      value: <- $nginx-listen-port
+      type: string
+    server-name:
+      value: <- $rabbitmq-server-name
+      type: string
+    proxy-target-port:
+      value: <- $rabbitmq-node-port
+      type: string
+    nginx-image:
+      value: <- $nginx-image-tag
+      type: string

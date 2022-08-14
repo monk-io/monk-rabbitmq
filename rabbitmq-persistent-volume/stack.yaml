@@ -1,0 +1,15 @@
+namespace: rabbitmq
+
+stack:
+  defines: process-group
+  runnable-list:
+    - rabbitmq/rabbitmq
+    - rabbitmq/nginx
+  variables:
+    rabbitmq-image-tag: "3.10-management"
+    nginx-listen-port: 80
+    nginx-image-tag: "latest"
+    rabbitmq-server-name: "rabbitmq.example.com"
+    rabbitmq-node-port: 15672
+    persistent-volume-disk-size: 50
+    persistent-volume-disk-kind: HDD
