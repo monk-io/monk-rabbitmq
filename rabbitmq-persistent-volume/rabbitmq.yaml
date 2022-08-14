@@ -1,4 +1,4 @@
-namespace: rabbitmq
+namespace: rabbitmq-persistent-volume
 
 
 rabbitmq:
@@ -13,11 +13,11 @@ rabbitmq:
     publisher: "monk.io"
   containers:
     defines: containers
-    volumes:
-      rabbitmq-data:
-        size: <- $persistent-volume-disk-capacity
-        kind: <- $persistent-volume-disk-type
-        path: <- $volume-data
+    # volumes:
+    #   rabbitmq-data:
+    #     size: 60
+    #     kind: HDD
+    #     path: <- $volume-data
     rabbitmq:
       image: rabbitmq
       image-tag: <- `${rabbitmq-image}`
@@ -48,7 +48,7 @@ rabbitmq:
   variables:
     volume-data:
       type: string
-      value: <- `${moncc-volume-path}/rabbitmq`
+      value: <- `${monk-volume-path}/rabbitmq`
     persistent-volume-disk-capacity:
       type: string
       value: <- $persistent-volume-disk-size
@@ -101,11 +101,11 @@ nginx:
   depends:
     wait-for:
       runnables:
-        - rabbitmq/rabbitmq
+        - rabbitmq-persistent-volume/rabbitmq
       timeout: 30
   variables:
     proxy-target-host:
-      value: <- get-hostname("rabbitmq/rabbitmq", "rabbitmq") split(".dns.podman") join("")
+      value: <- get-hostname("rabbitmq-persistent-volume/rabbitmq", "rabbitmq") split(".dns.podman") join("")
       type: string
     listen-port:
       value: <- $nginx-listen-port
