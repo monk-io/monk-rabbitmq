@@ -1,6 +1,5 @@
 namespace: rabbitmq-persistent-volume
 
-
 rabbitmq:
   defines: runnable
   metadata:
