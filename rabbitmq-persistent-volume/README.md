@@ -37,6 +37,8 @@ The current variables can be found in `rabbitmq/rabbitmq/variables` section
     nginx-image-tag: "latest"
     rabbitmq-server-name: "rabbitmq.example.com"
     rabbitmq-node-port: 15672
+    persistent-volume-disk-size: 50
+    persistent-volume-disk-kind: HDD
 ```
 
 ### Rabbitmq configuration files
@@ -58,11 +60,14 @@ You can find configuration files in `/files` directory in repository and can edi
 
 | Variable | Description | Type | Example |
 |----------|-------------|------|---------|
-| **rabbitmq-node-port** | Rabbitmq user interface port (It must be same with management.tcp.port in rabbitmq.conf  ) | string | 15672
+| **rabbitmq-node-port** | Rabbitmq user interface port (It must be same with management.tcp.port in rabbitmq.conf  ) | int | 15672
 | **rabbitmq-server-name** | Fqdn that nginx will accept and route to. | string | rabbitmq.example.com |
 | **rabbitmq-image-tag** | Rabbitmq image version. | string | 3.10-management |
 | **nginx-listen-port** | Configures the ports that the nginx listens on. | int | 80 |
 | **nginx-image-tag** | Nginx image version. | string | latest |
+| **persistent-volume-disk-size** | Persistet volume disk size of rabbitmq. | int | 50 |
+| **persistent-volume-disk-type** | Persistet volume disk type of rabbitmq. | sting | HDD |
+
 
 
 ## Local Deployment

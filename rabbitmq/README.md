@@ -58,7 +58,7 @@ You can find configuration files in `/files` directory in repository and can edi
 
 | Variable | Description | Type | Example |
 |----------|-------------|------|---------|
-| **rabbitmq-node-port** | Rabbitmq user interface port (It must be same with management.tcp.port in rabbitmq.conf  ) | string | 15672
+| **rabbitmq-node-port** | Rabbitmq user interface port (It must be same with management.tcp.port in rabbitmq.conf  ) | int | 15672
 | **rabbitmq-server-name** | Fqdn that nginx will accept and route to. | string | rabbitmq.example.com |
 | **rabbitmq-image-tag** | Rabbitmq image version. | string | 3.10-management |
 | **nginx-listen-port** | Configures the ports that the nginx listens on. | int | 80 |
