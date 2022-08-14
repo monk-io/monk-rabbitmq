@@ -15,8 +15,8 @@ rabbitmq:
     defines: containers
     # volumes:
     #   rabbitmq-data:
-    #     size: 60
-    #     kind: HDD
+    #     size: <- $persistent-volume-disk-capacity
+    #     kind: <- $persistent-volume-disk-type
     #     path: <- $volume-data
     rabbitmq:
       image: rabbitmq
