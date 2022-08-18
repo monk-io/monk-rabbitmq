@@ -80,32 +80,33 @@ First clone the repository and change the current directory to the /sonarqube-po
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 rabbitmq/nginx
- │  └─🧩 rabbitmq/rabbitmq
+ │  ├─🧩 rabbitmq-persistent-volume/rabbitmq
+ │  └─🧩 rabbitmq-persistent-volume/nginx
  ├─🔗 Process groups:
- │  └─🧩 rabbitmq/stack
+ │  └─🧩 rabbitmq-persistent-volume/stack
  └─⚙️ Entity instances:
-    └─🧩 rabbitmq/rabbitmq/metadata
+    └─🧩 rabbitmq-persistent-volume/rabbitmq/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list rabbitmq
 
 ✔ Got the list
-Type      Template                         Repository  Version      Tags
-runnable  nginx/latest                     rabbitmq    -            -
-runnable  nginx/reverse-proxy              rabbitmq    -            -
-runnable  nginx/reverse-proxy-ssl-certbot  rabbitmq    1.15-alpine  -
-runnable  rabbitmq/nginx                   local       -            -
-runnable  rabbitmq/rabbitmq                local       -            -
-group     rabbitmq/stack                   local       -            -
+Type      Template                             Repository                  Version      Tags
+runnable  nginx/latest                         rabbitmq-persistent-volume  -            -
+runnable  nginx/reverse-proxy                  rabbitmq-persistent-volume  -            -
+runnable  nginx/reverse-proxy-ssl-certbot      rabbitmq-persistent-volume  1.15-alpine  -
+runnable  rabbitmq-persistent-volume/nginx     local                       -            -
+runnable  rabbitmq-persistent-volume/rabbitmq  local                       -            self hosted, message brokers, message queues
+group     rabbitmq-persistent-volume/stack     local                       -            -
 
-➜  monk run rabbitmq/stack
 
-✔ Started local/rabbitmq/stack
+➜  monk run rabbitmq-persistent-volume/stack
+
+✔ Started local/rabbitmq-persistent-volume/stack
 
 ```
 
-This will start the entire rabbitmq/stack with a Nginx reverse proxy. 
+This will start the entire rabbitmq-persistent-volume/stack with a Nginx reverse proxy. 
 
 
 ## Cloud Deployment
@@ -154,28 +155,28 @@ Once cluster is ready execute the same command as for local and select your clus
 
 ✨ Loaded:
  ├─🔩 Runnables:
- │  ├─🧩 rabbitmq/nginx
- │  └─🧩 rabbitmq/rabbitmq
+ │  ├─🧩 rabbitmq-persistent-volume/rabbitmq
+ │  └─🧩 rabbitmq-persistent-volume/nginx
  ├─🔗 Process groups:
- │  └─🧩 rabbitmq/stack
+ │  └─🧩 rabbitmq-persistent-volume/stack
  └─⚙️ Entity instances:
-    └─🧩 rabbitmq/rabbitmq/metadata
+    └─🧩 rabbitmq-persistent-volume/rabbitmq/metadata
 ✔ All templates loaded successfully
 
 ➜  monk list rabbitmq
 
 ✔ Got the list
-Type      Template                         Repository  Version      Tags
-runnable  nginx/latest                     rabbitmq    -            -
-runnable  nginx/reverse-proxy              rabbitmq    -            -
-runnable  nginx/reverse-proxy-ssl-certbot  rabbitmq    1.15-alpine  -
-runnable  rabbitmq/nginx                   local       -            -
-runnable  rabbitmq/rabbitmq                local       -            -
-group     rabbitmq/stack                   local       -            -
+Type      Template                             Repository                  Version      Tags
+runnable  nginx/latest                         rabbitmq-persistent-volume  -            -
+runnable  nginx/reverse-proxy                  rabbitmq-persistent-volume  -            -
+runnable  nginx/reverse-proxy-ssl-certbot      rabbitmq-persistent-volume  1.15-alpine  -
+runnable  rabbitmq-persistent-volume/nginx     local                       -            -
+runnable  rabbitmq-persistent-volume/rabbitmq  local                       -            self hosted, message brokers, message queues
+group     rabbitmq-persistent-volume/stack     local                       -            -
 
-➜  monk run rabbitmq/stack
+➜  monk run rabbitmq-persistent-volume/stack
 
-✔ Started local/rabbitmq/stack
+✔ Started local/rabbitmq-persistent-volume/stack
 
 ```
 
@@ -183,26 +184,26 @@ group     rabbitmq/stack                   local       -            -
 
 ```bash
 # show Rabbitmq logs
-➜  monk logs -l 1000 -f rabbitmq/rabbitmq
+➜  monk logs -l 1000 -f rabbitmq-persistent-volume/rabbitmq
 
 # show Nginx logs
-➜  monk logs -l 1000 -f rabbitmq/nginx
+➜  monk logs -l 1000 -f rabbitmq-persistent-volume/nginx
 
 # access shell in the container running Mattermost
-➜  monk shell rabbitmq/rabbitmq
+➜  monk shell rabbitmq-persistent-volume/rabbitmq
 
 # access shell in the container running Nginx
-➜  monk shell rabbitmq/nginx
+➜  monk shell rabbitmq-persistent-volume/nginx
 
 ```
 
 ## Stop, remove and clean up workloads and templates
 
 ```bash
-➜ monk purge -x rabbitmq/stack rabbitmq/rabbitmq rabbitmq/nginx 
+➜ monk purge -x rabbitmq-persistent-volume/stack rabbitmq-persistent-volume/rabbitmq rabbitmq-persistent-volume/nginx 
 
-✔ rabbitmq/stack purged
-✔ rabbitmq/rabbitmq purged
-✔ rabbitmq/nginx purged
+✔ rabbitmq-persistent-volume/stack purged
+✔ rabbitmq-persistent-volume/rabbitmq purged
+✔ rabbitmq-persistent-volume/nginx purged
 
 ```
