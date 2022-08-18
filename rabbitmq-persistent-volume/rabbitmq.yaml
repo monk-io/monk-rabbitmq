@@ -2,6 +2,11 @@ namespace: rabbitmq-persistent-volume
 
 rabbitmq:
   defines: runnable
+  volumes:
+    rabbitmq-data:
+      size: <- $persistent-volume-disk-capacity
+      kind: <- $persistent-volume-disk-type
+      path: <- $volume-data  
   metadata:
     defines: metadata
     name: rabbitmq
@@ -12,11 +17,6 @@ rabbitmq:
     publisher: "monk.io"
   containers:
     defines: containers
-    # volumes:
-    #   rabbitmq-data:
-    #     size: <- $persistent-volume-disk-capacity
-    #     kind: <- $persistent-volume-disk-type
-    #     path: <- $volume-data
     rabbitmq:
       image: rabbitmq
       image-tag: <- `${rabbitmq-image}`
