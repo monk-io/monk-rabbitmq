@@ -12,4 +12,4 @@ stack:
     rabbitmq-server-name: "rabbitmq.example.com"
     rabbitmq-node-port: 15672
     persistent-volume-disk-size: 10
-    persistent-volume-disk-kind: HDD
+    persistent-volume-disk-kind: "HDD"

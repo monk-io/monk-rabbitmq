@@ -11,6 +11,7 @@ rabbitmq:
     website: https://www.rabbitmq.com/
     source: https://github.com/rabbitmq/rabbitmq-server
     publisher: "monk.io"
+    icon: https://www.vectorlogo.zone/logos/rabbitmq/rabbitmq-ar21.png
   containers:
     defines: containers
     rabbitmq:
