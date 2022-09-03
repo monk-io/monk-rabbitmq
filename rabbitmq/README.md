@@ -20,8 +20,9 @@ In order to load templates and change configuration simply use below commands:
 ```bash
 git clone https://github.com/kaganmersin/monk-rabbitmq
 
-# and change directory to the monk-rabbitmq template folder
-cd monk-rabbitmq
+# and change directory to the monk-rabbitmq/rabbitmq template folder
+cd monk-rabbitmq/rabbitmq
+
 ```
 
 ## Configuration
