@@ -68,7 +68,7 @@ You can find configuration files in `/files` directory in repository and can edi
 
 ## Local Deployment
 
-First clone the repository and change the current directory to the /sonarqube-postgresql folder and simply run below command after launching `monkd`:
+First clone the repository and change the current directory to the /rabbitmq folder and simply run below command after launching `monkd`:
 :
 
 ```bash
