@@ -1,6 +1,6 @@
 # Rabbitmq & Monk
 
-This repository contains Monk.io template to deploy sonarqube-community system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
+This repository contains Monk.io template to deploy rabbitmq system either locally or on cloud of your choice (AWS, GCP, Azure, Digital Ocean).
 
 This template includes Nginx as a reverse proxy  with rabbitmq out of box.
 
@@ -73,7 +73,7 @@ First clone the repository and change the current directory to the /rabbitmq fol
 
 ```bash
 ➜  monk load MANIFEST
-
+p
 ✨ Loaded:
  ├─🔩 Runnables:
  │  ├─🧩 rabbitmq/nginx
