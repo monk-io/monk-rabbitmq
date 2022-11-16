@@ -1,0 +1,2 @@
+REPO monk-rabbitmq
+DIR rabbitmq rabbitmq-persistent-volume
