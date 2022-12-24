@@ -34,10 +34,8 @@ The current variables can be found in `rabbitmq/rabbitmq/variables` section
 ```yaml
   variables:
     rabbitmq-image-tag: "3.10-management"
-    nginx-listen-port: 80
+    nginx-listen-port: 8080
     nginx-image-tag: "latest"
-    rabbitmq-server-name: "rabbitmq.example.com"
-    rabbitmq-node-port: 15672
 ```
 
 ### Rabbitmq configuration files
@@ -59,8 +57,6 @@ You can find configuration files in `/files` directory in repository and can edi
 
 | Variable | Description | Type | Example |
 |----------|-------------|------|---------|
-| **rabbitmq-node-port** | Rabbitmq user interface port (It must be same with management.tcp.port in rabbitmq.conf  ) | int | 15672
-| **rabbitmq-server-name** | Fqdn that nginx will accept and route to. | string | rabbitmq.example.com |
 | **rabbitmq-image-tag** | Rabbitmq image version. | string | 3.10-management |
 | **nginx-listen-port** | Configures the ports that the nginx listens on. | int | 80 |
 | **nginx-image-tag** | Nginx image version. | string | latest |
@@ -103,6 +99,9 @@ group     rabbitmq/stack                   local       -            -
 
 This will start the entire rabbitmq/stack with a Nginx reverse proxy. 
 
+## Default login credentials
+
+The default administrator username and password are guest and guest.
 
 ## Cloud Deployment
 
