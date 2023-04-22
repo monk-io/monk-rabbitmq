@@ -6,7 +6,7 @@ This template includes Nginx as a reverse proxy  with rabbitmq out of box.
 
 ## Start
 
-Set up Monk - https://docs.monk.io/docs/monk-in-10/
+[Set up Monk](https://docs.monk.io/docs/monk-in-10/)
 
 Start `monkd` and login.
 
@@ -16,7 +16,8 @@ monk login --email=<email> --password=<password>
 
 ## Clone Monk rabbitmq repository
 
-In order to load templates and change configuration simply use below commands: 
+In order to load templates and change configuration simply use below commands:
+
 ```bash
 git clone https://github.com/monk-io/monk-rabbitmq
 
@@ -41,35 +42,28 @@ The current variables can be found in `rabbitmq/rabbitmq/variables` section
 
 ### Rabbitmq configuration files
 
-You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 3 configuration files which bind to the container while run rabbitmq-monk kit 
+You can find configuration files in `/files` directory in repository and can edit before the running kit. There are 3 configuration files which bind to the container while run rabbitmq-monk kit
 
+| Configuration File    | Format Used                           | Directory in Container            | Purpose                                                                                                                                                                                       |
+| --------------------- | ------------------------------------- | --------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **rabbitmq.conf**     | New style format (sysctl or ini-like) | `/etc/rabbitmq/rabbitmq.conf`     | Primary configuration file. Should be used for most settings. It is easier for humans to read and machines (deployment tools) to generate. Not every setting can be expressed in this format. |
+| **advanced.config**   | Classic (Erlang terms)                | `/etc/rabbitmq/advanced.config`   | A limited number of settings that cannot be expressed in the new style configuration format, such as LDAP queries. Only should be used when necessary.                                        |
+| **rabbitmq-env.conf** | Environment variable pairs            | `/etc/rabbitmq/rabbitmq-env.conf` | Used to set environment variables relevant to RabbitMQ in one place.                                                                                                                          |
 
-| Configuration File	 | Format Used | Directory in Container | Purpose 
-|----------|-------------|------|---------|
-| **rabbitmq.conf** | New style format (sysctl or ini-like)	 | ` /etc/rabbitmq/rabbitmq.conf` | Primary configuration file. Should be used for most settings. It is easier for humans to read and machines (deployment tools) to generate. Not every setting can be expressed in this format.
-| **advanced.config** | Classic (Erlang terms) | `/etc/rabbitmq/advanced.config` | A limited number of settings that cannot be expressed in the new style configuration format, such as LDAP queries. Only should be used when necessary. | 
-| **rabbitmq-env.conf** | Environment variable pairs | `/etc/rabbitmq/rabbitmq-env.conf` | Used to set environment variables relevant to RabbitMQ in one place. |
+## Template variables
 
-
-
-
-
-##  Template variables
-
-| Variable | Description | Type | Example |
-|----------|-------------|------|---------|
-| **rabbitmq-image-tag** | Rabbitmq image version. | string | 3.10-management |
-| **nginx-listen-port** | Configures the ports that the nginx listens on. | int | 80 |
-| **nginx-image-tag** | Nginx image version. | string | latest |
-| **persistent-volume-disk-size** | Persistet volume disk size of rabbitmq. | int | 50 |
-| **persistent-volume-disk-type** | Persistet volume disk type of rabbitmq. | sting | HDD |
-
-
+| Variable                        | Description                                     | Type   | Example         |
+| ------------------------------- | ----------------------------------------------- | ------ | --------------- |
+| **rabbitmq-image-tag**          | Rabbitmq image version.                         | string | 3.10-management |
+| **nginx-listen-port**           | Configures the ports that the nginx listens on. | int    | 80              |
+| **nginx-image-tag**             | Nginx image version.                            | string | latest          |
+| **persistent-volume-disk-size** | Persistet volume disk size of rabbitmq.         | int    | 50              |
+| **persistent-volume-disk-type** | Persistet volume disk type of rabbitmq.         | sting  | HDD             |
 
 ## Local Deployment
 
-First clone the repository and change the current directory to the /rabbitmq-persistent-volume folder and simply run below command after launching `monkd`:
-:
+| First clone the repository and change the current directory to the /rabbitmq-persistent-volume folder and simply run below command after launching `monkd`: |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ```bash
 ➜  monk load MANIFEST
@@ -102,7 +96,7 @@ group     rabbitmq-persistent-volume/stack     local                       -    
 
 ```
 
-This will start the entire rabbitmq-persistent-volume/stack with a Nginx reverse proxy. 
+This will start the entire rabbitmq-persistent-volume/stack with a Nginx reverse proxy.
 
 ## Default login credentials
 
@@ -149,6 +143,7 @@ Your cluster has been created successfully.
 ```
 
 Once cluster is ready execute the same command as for local and select your cluster (the option will appear automatically).
+
 ```bash
 ➜  monk load MANIFEST
 
