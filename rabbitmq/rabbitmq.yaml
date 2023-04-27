@@ -3,18 +3,7 @@ namespace: rabbitmq
 rabbitmq:
   defines: runnable
   metadata:
-    defines: metadata
-    name: rabbitmq
-    description: |
-      RabbitMQ is an open-source message broker software that is used to establish communication between different software applications or services. 
-      It implements the Advanced Message Queuing Protocol (AMQP) and supports a wide range of programming languages, making it a versatile choice for building distributed systems.
-      RabbitMQ works by receiving and storing messages from producers (applications that generate messages) and delivering them to consumers (applications that receive messages). 
-      It supports a range of messaging patterns, including point-to-point, publish-subscribe, and request-response.
-    tags: self hosted, message brokers, message queues
-    website: https://www.rabbitmq.com/
-    source: https://github.com/rabbitmq/rabbitmq-server
-    publisher: monk.io
-    icon: https://www.vectorlogo.zone/logos/rabbitmq/rabbitmq-ar21.png
+    private: true
   services:
     rabbitmq-erl-epmd-port:
       container: rabbitmq
@@ -57,19 +46,9 @@ rabbitmq:
       protocol: tcp
       host-port: 25672
   containers:
-    defines: containers
     rabbitmq:
-      image: rabbitmq:3.10-management
+      image: rabbitmq
       image-tag: <- `${rabbitmq-image}`
-      ports:
-        - 4369:4369
-        - 5551:5551
-        - 5552:5552
-        - 5672:5672
-        - 5671:5671
-        - 15672:15672
-        - 15671:15671
-        - 25672:25672
       paths:
         - <- `${monk-volume-path}/rabbitmq:/var/lib/rabbitmq/`
   files:
@@ -107,7 +86,6 @@ rabbitmq:
 
 nginx:
   defines: runnable
-  inherits: nginx
   metadata:
     private: true
   depends:
@@ -118,9 +96,9 @@ nginx:
   services:
     nginx:
       container: nginx-reverse-proxy
-      port: <- `${listen-port}` to-i
+      port: <- `${listen-port}`
       protocol: tcp
-      host-port: <- `${listen-port}` to-i
+      host-port: <- `${listen-port}`
   connections:
     rabbitmq:
       runnable: rabbitmq/rabbitmq
@@ -142,12 +120,9 @@ nginx:
       path: /opt/bitnami/nginx/conf/server_blocks/reverse_proxy.conf
       container: nginx-reverse-proxy
   containers:
-    defines: containers
     nginx-reverse-proxy:
       image-tag: <- `${nginx-image}`
       image: docker.io/bitnami/nginx
-      ports:
-        - <- `0.0.0.0:${listen-port}:${listen-port}`
   variables:
     proxy-target-host:
       value: <- connection-hostname("rabbitmq")

@@ -52,7 +52,7 @@ You can find configuration files in `/files` directory in repository and can edi
 
 ## Template variables
 
-| Variable                        | Description                                     | Type   | Example         |
+| Variable                        | Description                                     | Type   | Defaults        |
 | ------------------------------- | ----------------------------------------------- | ------ | --------------- |
 | **rabbitmq-image-tag**          | Rabbitmq image version.                         | string | 3.10-management |
 | **nginx-listen-port**           | Configures the ports that the nginx listens on. | int    | 80              |
