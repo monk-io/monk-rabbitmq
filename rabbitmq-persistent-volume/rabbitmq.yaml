@@ -138,8 +138,6 @@ nginx:
     nginx-reverse-proxy:
       image-tag: <- `${nginx-image}`
       image: docker.io/bitnami/nginx
-      ports:
-        - <- `0.0.0.0:${listen-port}:${listen-port}/tcp`
   variables:
     proxy-target-host:
       value: <- connection-hostname("rabbitmq")

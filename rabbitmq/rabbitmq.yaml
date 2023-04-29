@@ -69,7 +69,7 @@ rabbitmq:
       contents: <<< files/rabbitmq-env.conf
   variables:
     rabbitmq-image:
-      value: <- $rabbitmq-image-tag
+      value: <- $rabbitmq-image-tag default("3.10-management")
       type: string
     RABBITMQ_CONFIG_FILE:
       env: RABBITMQ_CONFIG_FILE
@@ -113,7 +113,7 @@ nginx:
             proxy_set_header X-Forwarded-For $remote_addr;
             proxy_set_header X-Forwarded-Proto $scheme;
             proxy_set_header Host $host;
-            proxy_pass http://{{ v "proxy-target-host" }}:15672;
+            proxy_pass http://{{ v "proxy-target-host" }}:{{ v "proxy-target-port" }};
           }
         }
       mode: 511
@@ -128,14 +128,11 @@ nginx:
       value: <- connection-hostname("rabbitmq")
       type: string
     listen-port:
-      value: <- $nginx-listen-port
+      value: <- $nginx-listen-port default("8080")
       type: int
-    server-name:
-      value: <- $rabbitmq-server-name
-      type: string
     proxy-target-port:
       value: <- connection-port("rabbitmq")
       type: int
     nginx-image:
-      value: <- $nginx-image-tag
+      value: <- $nginx-image-tag default("latest")
       type: string
