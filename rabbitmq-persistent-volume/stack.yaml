@@ -1,5 +1,5 @@
+---
 namespace: rabbitmq-persistent-volume
-
 stack:
   defines: process-group
   metadata:
