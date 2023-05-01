@@ -1,11 +1,23 @@
+---
 namespace: rabbitmq
-
 stack:
   defines: process-group
+  metadata:
+    name: rabbitmq
+    description: |
+      RabbitMQ is an open-source message broker software that is used to establish communication between different software applications or services. 
+      It implements the Advanced Message Queuing Protocol (AMQP) and supports a wide range of programming languages, making it a versatile choice for building distributed systems.
+      RabbitMQ works by receiving and storing messages from producers (applications that generate messages) and delivering them to consumers (applications that receive messages).
+      It supports a range of messaging patterns, including point-to-point, publish-subscribe, and request-response.
+    tags: self hosted, message brokers, message queues, AMQP, publish-subscribe, distributed systems, scalability, reliability, fault-tolerance, clustering
+    website: https://www.rabbitmq.com/
+    source: https://github.com/rabbitmq/rabbitmq-server
+    publisher: monk.io
+    icon: https://www.vectorlogo.zone/logos/rabbitmq/rabbitmq-ar21.png
   runnable-list:
     - rabbitmq/rabbitmq
     - rabbitmq/nginx
   variables:
-    rabbitmq-image-tag: "3.10-management"
+    rabbitmq-image-tag: 3.10-management
     nginx-listen-port: 8080
-    nginx-image-tag: "latest"
+    nginx-image-tag: latest
