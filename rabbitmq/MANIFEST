@@ -1,3 +1,0 @@
-REPO monk-rabbitmq
-LOAD rabbitmq.yaml stack.yaml
-RESOURCES files/advanced.config files/rabbitmq.conf files/rabbitmq-env.conf
