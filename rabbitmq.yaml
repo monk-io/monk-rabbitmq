@@ -1,7 +1,7 @@
 ---
 namespace: rabbitmq
 
-rabbitmq:
+base:
   defines: runnable
   metadata:
     name: rabbitmq
@@ -16,6 +16,14 @@ rabbitmq:
     publisher: monk.io
     icon: https://www.vectorlogo.zone/logos/rabbitmq/rabbitmq-ar21.png
     private: true
+  containers:
+    rabbitmq:
+      image: rabbitmq
+      image-tag: latest
+
+rabbitmq:
+  defines: runnable
+  inherits: rabbitmq/base
   services:
     rabbitmq-erl-epmd-port:
       container: rabbitmq
