@@ -1,0 +1,92 @@
+name: Run the tests
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+  pull_request:
+
+jobs:
+  run-initial-tests:
+    uses: monk-io/monk-test-infra/.github/workflows/run_initial_tests.yml@main
+    secrets: inherit
+
+  create-cluster:
+    needs: run-initial-tests
+    uses: monk-io/monk-test-infra/.github/workflows/create_cluster.yml@main
+
+  run-tests:
+    needs: create-cluster
+    runs-on: ubuntu-latest
+    container:
+      image: gcr.io/monk-releases/monk-ci:latest
+      env:
+        MONK_LOGIN: ${{ secrets.KIT_TESTING_MONK_USERNAME }}
+        MONK_PASS: ${{ secrets.KIT_TESTING_MONK_PASSWORD }}
+        MONK_CLI_NO_FANCY: "true"
+        MONK_CLI_NO_COLOR: "true"
+        MONK_SOCKET: "monkcode://${{needs.create-cluster.outputs.monkcode}}"
+        JOB: local/rabbitmq/stack
+
+    outputs:
+      monkcode: ${{needs.create-cluster.outputs.monkcode}}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install dependencies & setup monkd
+        run: |
+          apk add gawk curl
+          monk login --email "${MONK_LOGIN}" --password "${MONK_PASS}"
+
+      - name: Install KITT
+        run: |
+          ls -la
+          wget https://storage.googleapis.com/monk-releases/kitt/kitt -O /usr/local/bin/kitt
+          chmod +x /usr/local/bin/kitt
+
+      - name: Run KITT
+        run: |
+          /usr/local/bin/kitt lint
+
+      - name: Test - monk load
+        run: |
+          monk load phpmyadmin.yaml
+
+      - name: Test - monk run
+        run: |
+          monk run --tag githubrunner "${JOB}"
+
+      - name: Test - monk describe
+        run: |
+          monk describe "${JOB}"
+
+      - name: Test - monk info
+        run: |
+          monk info "${JOB}"
+
+      - name: Test - monk ps
+        run: |
+          monk ps --filter "${JOB}"
+
+      # - name: Test - curl
+      #   run: |
+      #     set -x
+      #     ENDPOINT=$(monk describe "${JOB}" 2>&1 | awk '/ENDPOINT/ {print $3}')
+      #     curl ${ENDPOINT}
+
+      - name: sleep 10s
+        run: |
+          sleep 10
+
+      - name: Test - monk logs
+        run: |
+          monk logs "${JOB}"
+
+  destroy-cluster:
+    needs: run-tests
+    if: always()
+    uses: monk-io/monk-test-infra/.github/workflows/nuke_cluster.yml@main
+    secrets: inherit
+    with:
+      monkcode: ${{needs.run-tests.outputs.monkcode}}
