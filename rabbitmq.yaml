@@ -24,6 +24,8 @@ base:
 rabbitmq:
   defines: runnable
   inherits: rabbitmq/base
+  metadata:
+    private: false
   services:
     rabbitmq-erl-epmd-port:
       container: rabbitmq
@@ -108,9 +110,7 @@ nginx:
     source: https://github.com/nginx/nginx
     description: |
       Nginx is a powerful and lightweight web server software known for its high performance and scalability. It acts as a reverse proxy, load balancer, and HTTP cache, enabling efficient handling of incoming client requests.
-
       Nginx is widely used to improve the performance, security, and reliability of websites and web applications. Its modular architecture and extensive configuration options make it a popular choice among developers and system administrators seeking to optimize their server infrastructure.
-
       Whether you're running a small personal website or managing a large-scale enterprise application, Nginx provides a robust foundation for delivering content quickly and reliably.
     private: true
   depends:
